@@ -6,7 +6,7 @@
 
 ;((first (repos/user-repos "guipdutra")) :name)
 
-(defn group-users-with-pull-request-count [repos]
+(defn group-users-with-pull-request-count [pulls]
   nil)
 
 (defn -main []
