@@ -2,12 +2,14 @@
   (require [tentacles.repos :as repos]
            [tentacles.pulls :as pulls]))
 
-;(:login (:user (:head (first (pulls/pulls "rails" "rails")))))
-
-;((first (repos/user-repos "guipdutra")) :name)
+(:login (:user (:head (first (pulls/pulls "rails" "rails")))))
 
 (defn group-users-with-pull-request-count [pulls]
-  nil)
+  (cond
+    (nil? pulls) nil
+    (empty? pulls) nil
+    :else (frequencies (map (fn [pull] (:login (:user (:head pull)))) pulls))))
+
 
 (defn -main []
- (println "test"))
+ (println (group-users-with-pull-request-count (count (pulls/pulls "rails" "rails"))))

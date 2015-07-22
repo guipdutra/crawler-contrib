@@ -9,6 +9,6 @@
              (group-users-with-pull-request-count []) => nil)
        (fact "it returns hash with user name and pull request count"
              (group-users-with-pull-request-count [{:head {:user {:login "guipdutra"}}},
-                                                   {:head {:user {:login "guipdutra"}}}]) => {:guipdutra 2}))
+                                                   {:head {:user {:login "guipdutra"}}}]) => {"guipdutra" 2}))
 
 
