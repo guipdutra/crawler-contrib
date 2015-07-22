@@ -3,4 +3,4 @@
 
 
 
-(repos/user-repos "guipdutra")
+(take 1 (repos/user-repos "guipdutra"))
