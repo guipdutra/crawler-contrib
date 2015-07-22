@@ -1,6 +1,6 @@
-(ns crawler-contrib.core)
+(ns crawler-contrib.core
+  (require [tentacles.repos :as repos]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+
+
+(repos/user-repos "guipdutra")
