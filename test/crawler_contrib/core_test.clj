@@ -1,7 +1,11 @@
 (ns crawler-contrib.core-test
-  (:require [clojure.test :refer :all]
-            [crawler-contrib.core :refer :all]))
+  (:use midje.sweet)
+  (:use crawler-contrib.core))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+
+(facts "about 'group-users-with-pull-request-count'"
+       (fact "it returns nil if repos are nil or empty"
+             (group-users-with-pull-request-count nil) => nil
+             (group-users-with-pull-request-count []) => nil))
+
+
