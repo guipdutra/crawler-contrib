@@ -2,14 +2,20 @@
   (require [tentacles.repos :as repos]
            [tentacles.pulls :as pulls]))
 
-(:login (:user (:head (first (pulls/pulls "rails" "rails")))))
-
-(defn group-users-with-pull-request-count [pulls]
+(defn group-users-by-total-contributions [contributions]
   (cond
-    (nil? pulls) nil
-    (empty? pulls) nil
-    :else (sort-by val > (frequencies (map (fn [pull] (:login (:user (:head pull)))) pulls)))))
+    (nil? contributions) nil
+    (empty? contributions) nil
+    :else
+    (-> (map-users-to-total-commits contributions) sort-by-total-commits)))
 
+(defn map-users-to-total-commits [contributions]
+  (into {} (map (fn [contribution]
+                  (hash-map (:login (:author contribution)) (:total contribution)))
+                contributions)))
+
+(defn sort-by-total-commits [users-with-commits]
+  (sort-by val > users-with-commits))
 
 (defn -main []
- (println (sort-by val > (group-users-with-pull-request-count (pulls/pulls "rails" "rails" {:client_id "baf5a0884abc3cb4a49f", :client_token "d164270549a9a3246aa1a50e560bbd37cfbe4018"})))))
+ (println (group-users-by-total-contributions (repos/contributor-statistics "rails" "rails" {:auth "guipdutra:guipereira08"}))))
