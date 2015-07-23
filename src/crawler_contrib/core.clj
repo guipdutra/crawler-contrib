@@ -8,8 +8,8 @@
   (cond
     (nil? pulls) nil
     (empty? pulls) nil
-    :else (frequencies (map (fn [pull] (:login (:user (:head pull)))) pulls))))
+    :else (sort-by val > (frequencies (map (fn [pull] (:login (:user (:head pull)))) pulls)))))
 
 
 (defn -main []
- (println (group-users-with-pull-request-count (count (pulls/pulls "rails" "rails"))))
+ (println (sort-by val > (group-users-with-pull-request-count (pulls/pulls "rails" "rails" {:client_id "baf5a0884abc3cb4a49f", :client_token "d164270549a9a3246aa1a50e560bbd37cfbe4018"})))))
