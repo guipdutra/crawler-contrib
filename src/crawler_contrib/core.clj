@@ -18,4 +18,4 @@
   (sort-by val > users-with-commits))
 
 (defn -main []
- (println (group-users-by-total-contributions (repos/contributor-statistics "rails" "rails" {:auth "guipdutra:guipereira08"}))))
+ (println (group-users-by-total-contributions (repos/contributor-statistics "rails" "rails" {:auth "guipdutra"}))))
