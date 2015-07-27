@@ -19,8 +19,14 @@
     :else
     (-> (map-users-to-total-commits contributions) sort-by-total-commits)))
 
-(defn get-all-repositories-contributions []
-  (map (fn [repo] (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth)) (take 3 (repos/all-repos auth))))
+(defn get-repository-statistics [repo]
+  (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))
+
+(defn get-all-repositories []
+  (take 2 (repos/all-repos auth)))
+
+(defn get-all-repositories-contributions [all-repositories]
+  (map (fn [repo] (get-repository-statistics repo)) all-repositories))
 
 (defn -main []
-  (map (fn [contrib] (group-users-by-total-contributions contrib)) (get-all-repositories-contributions)))
+ (mapcat (fn [contrib] (group-users-by-total-contributions contrib)) (get-all-repositories-contributions (get-all-repositories))))
