@@ -9,15 +9,15 @@
                   (hash-map (:login (:author contribution)) (:total contribution)))
                 contributions)))
 
-(defn sort-by-total-commits [users-with-commits]
-  (sort-by val > users-with-commits))
+;(defn sort-by-total-commits [users-with-commits]
+;  (sort-by val > users-with-commits))
 
 (defn group-users-by-total-contributions [contributions]
   (cond
     (nil? contributions) nil
     (empty? contributions) nil
     :else
-    (-> (map-users-to-total-commits contributions) sort-by-total-commits)))
+    (map-users-to-total-commits contributions)))
 
 (defn get-repository-statistics [repo]
   (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))
@@ -29,4 +29,4 @@
   (map (fn [repo] (get-repository-statistics repo)) all-repositories))
 
 (defn -main []
- (mapcat (fn [contrib] (group-users-by-total-contributions contrib)) (get-all-repositories-contributions (get-all-repositories))))
+ (into {} (mapcat (fn [contrib] (group-users-by-total-contributions contrib)) (get-all-repositories-contributions (get-all-repositories)))))
