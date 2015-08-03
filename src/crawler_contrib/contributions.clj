@@ -2,7 +2,8 @@
   (require [tentacles.repos :as repos]
            [tentacles.pulls :as pulls]))
 
-(def auth {:oauth-token "acess_token"})
+(def auth
+  {:oauth-token (System/getenv "GITHUB_ACCESS_TOKEN")})
 
 (defn map-users-to-total-commits [contributions]
   (into {}
@@ -17,17 +18,20 @@
   (cond
     (nil? contributions) nil
     (empty? contributions) nil
-    :else
-    (map-users-to-total-commits contributions)))
+    :else (map-users-to-total-commits contributions)))
 
 (defn get-repository-statistics [repo]
   (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))
 
 (defn get-all-repositories []
-  (take 1 (repos/all-repos auth)))
+  (take 2 (count (repos/all-repos (merge auth {:all-pages true})))))
 
 (defn get-all-repositories-contributions [all-repositories]
   (map (fn [repo] (get-repository-statistics repo)) all-repositories))
 
 (defn group-all-contributions-by-user-for-all-repositories []
-  (into {} (mapcat (fn [contrib] (group-users-by-total-contributions contrib)) (get-all-repositories-contributions (get-all-repositories)))))
+  (into {}
+        (sort-by-total-commits
+          (mapcat (fn [contrib]
+                    (group-users-by-total-contributions contrib))
+                  (get-all-repositories-contributions (get-all-repositories))))))
