@@ -1,9 +1,5 @@
 (ns crawler-contrib.contributions
-  (require [tentacles.repos :as repos]
-           [tentacles.pulls :as pulls]))
-
-(def auth
-  {:oauth-token (System/getenv "GITHUB_ACCESS_TOKEN")})
+  (:use crawler-contrib.github-api-wrapper))
 
 (defn map-users-to-total-commits [contributions]
   (into {}
@@ -19,12 +15,6 @@
     (nil? contributions) nil
     (empty? contributions) nil
     :else (map-users-to-total-commits contributions)))
-
-(defn get-repository-statistics [repo]
-  (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))
-
-(defn get-all-repositories []
-  (take 2 (count (repos/all-repos (merge auth {:all-pages true})))))
 
 (defn get-all-repositories-contributions [all-repositories]
   (map (fn [repo] (get-repository-statistics repo)) all-repositories))
