@@ -3,9 +3,9 @@
 
 (defn map-users-to-total-commits [contributions]
   (into {}
-        (map (fn [contribution]
+        (apply merge-with + (map (fn [contribution]
                (hash-map (:login (:author contribution)) (:total contribution)))
-             contributions)))
+             contributions))))
 
 (defn sort-by-total-commits [users-with-commits]
   (sort-by val > users-with-commits))
@@ -20,8 +20,6 @@
   (map (fn [repo] (get-repository-statistics repo)) all-repositories))
 
 (defn group-all-contributions-by-user-for-all-repositories []
-  (into {}
-        (sort-by-total-commits
-          (mapcat (fn [contrib]
-                    (group-users-by-total-contributions contrib))
-                  (get-all-repositories-contributions (get-all-repositories))))))
+  (sort-by-total-commits (into {}
+         (mapcat (fn [contrib] (group-users-by-total-contributions contrib))
+                                  (get-all-repositories-contributions (get-all-repositories))))))
