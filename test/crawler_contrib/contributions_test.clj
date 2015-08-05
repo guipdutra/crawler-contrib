@@ -18,4 +18,10 @@
                    (group-users-by-total-contributions [{:total 3 :author {:login "guipdutra"}},
                                                         {:total 2 :author {:login "user"}},
                                                         {:total 1 :author {:login "user"}}]) =>
-                   {"guipdutra" 3 "user" 3})))
+                   {"guipdutra" 3 "user" 3})
+             (fact "it maps when total commit number is nil"
+                   (group-users-by-total-contributions [{:total 3 :author {:login "guipdutra"}},
+                                                        {:total nil :author "user"}
+                                                        {:total 2 :author {:login "user"}},
+                                                        {:total 1 :author {:login "user"}}]) =>
+                   {"guipdutra" 3 "user" 3}) ))
