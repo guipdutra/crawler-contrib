@@ -50,6 +50,5 @@
       sort-by-total-commits))
 
 (defn get-bigger-contributors []
-  (let [users-with-commits (group-all-contributions-by-user-for-all-repositories)]
     (map (fn [user-with-commit]
-           (first user-with-commit)) users-with-commits)))
+           (first user-with-commit)) (group-all-contributions-by-user-for-all-repositories)))
