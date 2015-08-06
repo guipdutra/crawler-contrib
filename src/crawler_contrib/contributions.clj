@@ -1,5 +1,7 @@
 (ns crawler-contrib.contributions
-  (:use crawler-contrib.github-api-wrapper))
+  (:require [crawler-contrib.github-api-wrapper
+             :refer [get-all-repositories
+                     get-repository-statistics]]))
 
 (defn create-hash-with-user-and-total-commits [contributions]
   (map (fn [contribution]
@@ -46,3 +48,8 @@
            (get-all-repositories-contributions (get-all-repositories)))
       sum-all-project-commits
       sort-by-total-commits))
+
+(defn get-bigger-contributors []
+  (let [users-with-commits (group-all-contributions-by-user-for-all-repositories)]
+    (map (fn [user-with-commit]
+           (first user-with-commit)) users-with-commits)))

@@ -38,3 +38,15 @@
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "linux" :owner {:login "linux"}}) => '({:total 3 :author {:login "dhh"}} {:total 5 :author {:login "guipdutra"}})
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "ruby" :owner {:login "ruby"}}) => '({:total 3 :author {:login "rodrigomaia17"}}))))
 
+
+(facts "about 'get-bigger-contributors'"
+       (fact "it returns the users the bigger contributors "
+             (get-bigger-contributors) => ["guipdutra" "dhh" "rodrigomaia17"]
+             (provided
+               (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
+                                                                              {:name "linux" :owner {:login "linux"}}
+                                                                              {:name "ruby" :owner {:login "ruby"}})
+
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "rails" :owner {:login "rails"}}) => '({:total 5 :author {:login "guipdutra"}} {:total 5 :author {:login "dhh"}})
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "linux" :owner {:login "linux"}}) => '({:total 3 :author {:login "dhh"}} {:total 5 :author {:login "guipdutra"}})
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "ruby" :owner {:login "ruby"}}) => '({:total 3 :author {:login "rodrigomaia17"}}))))
