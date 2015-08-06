@@ -3,7 +3,7 @@
              :refer [get-all-repositories
                      get-repository-statistics]]))
 
-(def extract-login-and-total-commit
+(def extract-login-and-total-commits
   (fn [contribution]
     (hash-map (:login (:author contribution))
               (:total contribution))))
@@ -20,7 +20,7 @@
            (first user-with-commit)))
 
 (defn create-hash-with-user-and-total-commits [contributions]
-  (map extract-login-and-total-commit contributions))
+  (map extract-login-and-total-commits contributions))
 
 (defn remove-any-nil-hash-value [user-with-commits]
   (remove value-nil? user-with-commits))
@@ -54,6 +54,6 @@
       sum-all-project-commits
       sort-by-total-commits))
 
-(defn get-greatest-contributors []
+(defn get-greatest-contributors [filter-options]
     (map extract-user-name
       (group-all-contributions-by-user-for-all-repositories)))

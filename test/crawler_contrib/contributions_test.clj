@@ -49,4 +49,15 @@
 
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "rails" :owner {:login "rails"}}) => '({:total 5 :author {:login "guipdutra"}} {:total 5 :author {:login "dhh"}})
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "linux" :owner {:login "linux"}}) => '({:total 3 :author {:login "dhh"}} {:total 5 :author {:login "guipdutra"}})
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "ruby" :owner {:login "ruby"}}) => '({:total 3 :author {:login "rodrigomaia17"}})))
+
+       (fact "it returns only with total commits greater or equals than 5"
+             (get-greatest-contributors {:number-of-commits 5} ) => ["guipdutra" "dhh"]
+             (provided
+               (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
+                                                                              {:name "linux" :owner {:login "linux"}}
+                                                                              {:name "ruby" :owner {:login "ruby"}})
+
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "rails" :owner {:login "rails"}}) => '({:total 5 :author {:login "guipdutra"}} {:total 5 :author {:login "dhh"}})
+               (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "linux" :owner {:login "linux"}}) => '({:total 3 :author {:login "dhh"}} {:total 5 :author {:login "guipdutra"}})
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "ruby" :owner {:login "ruby"}}) => '({:total 3 :author {:login "rodrigomaia17"}}))))
