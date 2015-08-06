@@ -18,3 +18,10 @@
                  "user"
                  "repo_name"
                  {:oauth-token (System/getenv "GITHUB_ACCESS_TOKEN")}) => [{}])))
+
+(facts "about 'get-user'"
+       (fact "it calls github API for user informations"
+             (get-user "user") => [{}]
+             (provided
+               (tentacles.users/user "user"
+                                     {:oauth-token (System/getenv "GITHUB_ACCESS_TOKEN")}) => [{}])))

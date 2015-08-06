@@ -40,8 +40,8 @@
 
 
 (facts "about 'get-bigger-contributors'"
-       (fact "it returns the users the bigger contributors "
-             (get-bigger-contributors) => ["guipdutra" "dhh" "rodrigomaia17"]
+       (fact "it returns the greates contributors username"
+             (get-greatest-contributors) => ["guipdutra" "dhh" "rodrigomaia17"]
              (provided
                (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
                                                                               {:name "linux" :owner {:login "linux"}}

@@ -1,6 +1,6 @@
 (ns crawler-contrib.core
-  (:require [crawler-contrib.contributions
-             :refer [group-all-contributions-by-user-for-all-repositories]]))
+  (:require [crawler-contrib.contributions :refer [get-greatest-contributors]]))
 
 (defn -main []
-  (println (group-all-contributions-by-user-for-all-repositories)))
+  (dorun
+    (map println (get-greatest-contributors))))

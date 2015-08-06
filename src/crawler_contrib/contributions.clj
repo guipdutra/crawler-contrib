@@ -49,6 +49,6 @@
       sum-all-project-commits
       sort-by-total-commits))
 
-(defn get-bigger-contributors []
+(defn get-greatest-contributors []
     (map (fn [user-with-commit]
            (first user-with-commit)) (group-all-contributions-by-user-for-all-repositories)))
