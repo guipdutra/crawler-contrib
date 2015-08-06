@@ -3,25 +3,30 @@
              :refer [get-all-repositories
                      get-repository-statistics]]))
 
+(def extract-login-and-total-commit
+  (fn [contribution]
+    (hash-map (:login (:author contribution))
+              (:total contribution))))
+
+(def value-nil? (fn [[k v]] (nil? v)))
+
+(def sum-if-is-both-numbers
+  (fn [number next-number]
+    (if (and (number? number) (number? next-number))
+      (+ number next-number))))
+
+(def extract-user-name
+  (fn [user-with-commit]
+           (first user-with-commit)))
+
 (defn create-hash-with-user-and-total-commits [contributions]
-  (map (fn [contribution]
-         (hash-map (:login (:author contribution))
-                   (:total contribution)))
-       contributions))
+  (map extract-login-and-total-commit contributions))
 
 (defn remove-any-nil-hash-value [user-with-commits]
-  (remove (fn [[k v]]
-            (nil? v)) user-with-commits))
-
-(defn sum-if-is-both-numbers [number next-number]
-  (if (and (number? number) (number? next-number))
-    (+ number next-number)))
+  (remove value-nil? user-with-commits))
 
 (defn sum-all-project-commits [user-with-commits]
-  (apply
-    merge-with (fn [a b]
-                 (sum-if-is-both-numbers a b))
-    user-with-commits))
+  (apply merge-with sum-if-is-both-numbers user-with-commits))
 
 (defn map-users-to-total-commits [contributions]
   (into {}
@@ -36,11 +41,11 @@
   (cond
     (nil? contributions) nil
     (empty? contributions) nil
-    :else
-    (map-users-to-total-commits contributions)))
+    :else (map-users-to-total-commits contributions)))
 
 (defn get-all-repositories-contributions [all-repositories]
-  (map (fn [repo] (get-repository-statistics repo)) all-repositories))
+  (map (fn [repo]
+         (get-repository-statistics repo)) all-repositories))
 
 (defn group-all-contributions-by-user-for-all-repositories []
   (-> (map (fn [contrib]
@@ -50,5 +55,5 @@
       sort-by-total-commits))
 
 (defn get-greatest-contributors []
-    (map (fn [user-with-commit]
-           (first user-with-commit)) (group-all-contributions-by-user-for-all-repositories)))
+    (map extract-user-name
+      (group-all-contributions-by-user-for-all-repositories)))
