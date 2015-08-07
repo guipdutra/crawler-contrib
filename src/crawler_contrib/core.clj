@@ -3,4 +3,4 @@
 
 (defn -main []
   (dorun
-    (map println (get-greatest-contributors))))
+    (map println (get-greatest-contributors {:number-of-commits 5}))))

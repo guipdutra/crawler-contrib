@@ -54,6 +54,18 @@
       sum-all-project-commits
       sort-by-total-commits))
 
-(defn get-greatest-contributors [filter-options]
-    (map extract-user-name
-      (group-all-contributions-by-user-for-all-repositories)))
+(defn extract-commit-number [user-with-commit]
+  (last user-with-commit))
+
+(defn filter-by-number-of-commits [users-with-commits number-of-commits]
+  (filter
+    (fn [user-with-commit]
+      (> (extract-commit-number user-with-commit) number-of-commits))
+    users-with-commits))
+
+(defn get-greatest-contributors
+  ([] (map extract-user-name (group-all-contributions-by-user-for-all-repositories)))
+
+  ([{:keys [number-of-commits]}]
+   (map extract-user-name (filter-by-number-of-commits
+                            (group-all-contributions-by-user-for-all-repositories) number-of-commits))))
