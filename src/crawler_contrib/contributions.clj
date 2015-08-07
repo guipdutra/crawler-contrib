@@ -39,6 +39,7 @@
 
 (defn group-users-by-total-contributions [contributions]
   (cond
+    (keyword? contributions) nil
     (nil? contributions) nil
     (empty? contributions) nil
     :else (map-users-to-total-commits contributions)))
@@ -53,6 +54,7 @@
            (get-all-repositories-contributions (get-all-repositories)))
       sum-all-project-commits
       sort-by-total-commits))
+
 
 (defn extract-commit-number [user-with-commit]
   (last user-with-commit))
