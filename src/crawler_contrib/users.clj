@@ -17,13 +17,13 @@
 
 (def is-brazilian?
   (fn [user]
-   (some (is-location-valid-for-user? user) defualt-locations)))
+    (some (is-location-valid-for-user? user) defualt-locations)))
 
 (def extract-login
   (fn [user-info] (:login user-info)))
 
 (def get-user-info
- (fn [user-name] (get-user user-name)))
+  (fn [user-name] (get-user user-name)))
 
 (defn filter-by-brazilians [users]
   (map extract-login (filter is-brazilian? (pmap get-user-info users))))
