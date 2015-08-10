@@ -45,19 +45,20 @@
     :else (map-users-to-total-commits contributions)))
 
 (defn get-all-repositories-contributions [all-repositories]
-    (map (fn [repo]
+    (pmap (fn [repo]
              (get-repository-statistics repo)) all-repositories))
 
 (defn print-information-about-getting-repositories [repo-count total-repositories]
   (println (str "Getting " repo-count " of " total-repositories)))
 
 (defn group-all-contributions-by-user-for-all-repositories []
-  (let [repo-count (atom 0)]
+  (let [repo-count (atom 0)
+        all-repositories (get-all-repositories)]
     (-> (map (fn [contrib]
                (do
-                 (print-information-about-getting-repositories (swap! repo-count inc) (count (get-all-repositories)))
+                 (print-information-about-getting-repositories (swap! repo-count inc) (count all-repositories))
                  (group-users-by-total-contributions contrib)))
-             (get-all-repositories-contributions (get-all-repositories)))
+             (get-all-repositories-contributions all-repositories))
         sum-all-project-commits
         sort-by-total-commits)))
 
@@ -74,5 +75,4 @@
   ([] (map extract-user-name (group-all-contributions-by-user-for-all-repositories)))
 
   ([{:keys [number-of-commits]}]
-   (map extract-user-name (filter-by-number-of-commits
-                            (group-all-contributions-by-user-for-all-repositories) number-of-commits))))
+   (map extract-user-name (filter-by-number-of-commits (group-all-contributions-by-user-for-all-repositories) number-of-commits))))
