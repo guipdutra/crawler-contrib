@@ -17,7 +17,7 @@
 
 (def extract-user-name
   (fn [user-with-commit]
-           (first user-with-commit)))
+    (first user-with-commit)))
 
 (defn create-hash-with-user-and-total-commits [contributions]
   (map extract-login-and-total-commits contributions))
@@ -44,9 +44,16 @@
     (empty? contributions) nil
     :else (map-users-to-total-commits contributions)))
 
+(defn print-information-about-getting-repositories [repo-count total-repositories]
+  (println (str "Getting " repo-count " of " total-repositories)))
+
 (defn get-all-repositories-contributions [all-repositories]
-  (map (fn [repo]
-         (get-repository-statistics repo)) all-repositories))
+  (let [repo-count (atom 0)]
+    (map (fn [repo]
+           (do
+             (print-information-about-getting-repositories (swap! repo-count inc)
+                                                           (count all-repositories))
+             (get-repository-statistics repo))) all-repositories)))
 
 (defn group-all-contributions-by-user-for-all-repositories []
   (-> (map (fn [contrib]
