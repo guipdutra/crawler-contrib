@@ -3,7 +3,7 @@
              :refer [get-user]]))
 
 (def defualt-locations
-  ["Belo Horizonte" "Brazil" "São Paulo"])
+  ["Belo Horizonte" "Brazil" "São Paulo" "Porto Alegre" "Recife" "Rio de Janeiro"])
 
 (defn extract-location [user-info]
   (let [location (:location user-info)]
