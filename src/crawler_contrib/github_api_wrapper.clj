@@ -9,12 +9,13 @@
 (def options {:all-pages true})
 
 (defn make-request [method-to-call]
-  (if (> (:remaining (:core (:resources (core/rate-limit auth)))) 0)
-    (method-to-call)
-    (make-request method-to-call)))
+  (loop [remaining (:remaining (:core (:resources (core/rate-limit auth))))]
+    (if (> remaining 0)
+      (method-to-call)
+      (recur (:remaining (:core (:resources (core/rate-limit auth))))))))
 
 (defn get-all-repositories []
-  (take 2 (make-request (fn [] (repos/all-repos (merge auth options))))))
+  (take 100 (make-request (fn [] (repos/all-repos (merge auth options))))))
 
 (defn get-repository-statistics [repo]
   (make-request (fn [] (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))))
