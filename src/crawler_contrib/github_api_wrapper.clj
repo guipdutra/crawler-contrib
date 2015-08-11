@@ -4,21 +4,34 @@
            [tentacles.core :as core]
            [tentacles.pulls :as pulls]))
 
-(def auth {:oauth-token (System/getenv "GITHUB_ACCESS_TOKEN")})
+(def valid-github-tokens
+  (map (fn [token] (System/getenv token)) ["GITHUB_ACCESS_TOKEN_1"
+                                           "GITHUB_ACCESS_TOKEN_2"
+                                           "GITHUB_ACCESS_TOKEN_3"
+                                           "GITHUB_ACCESS_TOKEN_4"]))
+
+(defn get-remaining-request-by-token [token]
+  (:remaining (:core (:resources (core/rate-limit {:oauth-token token})))))
+
+(def token-request-is-greater-than-zero?
+  (fn [token] (> (get-remaining-request-by-token token) 0)))
+
+(defn pick-token []
+  (let [token (rand-nth valid-github-tokens)]
+  (if (token-request-is-greater-than-zero? token)
+    token
+    (pick-token))))
+
+(defn auth []
+  {:oauth-token (pick-token)})
 
 (def options {:all-pages true})
 
-(defn make-request [method-to-call]
-  (loop [remaining (:remaining (:core (:resources (core/rate-limit auth))))]
-    (if (> remaining 0)
-      (method-to-call)
-      (recur (:remaining (:core (:resources (core/rate-limit auth))))))))
-
 (defn get-all-repositories []
-  (take 100 (make-request (fn [] (repos/all-repos (merge auth options))))))
+  (take 10000 (repos/all-repos (merge (auth) options))))
 
 (defn get-repository-statistics [repo]
-  (make-request (fn [] (repos/contributor-statistics (:login (:owner repo)) (:name repo) auth))))
+  (repos/contributor-statistics (:login (:owner repo)) (:name repo) (auth)))
 
 (defn get-user [user-name]
-  (make-request (fn [] (users/user user-name auth))))
+  (users/user user-name (auth)))
