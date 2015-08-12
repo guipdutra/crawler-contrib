@@ -27,8 +27,8 @@
                    {"guipdutra" 3 "user" 3})))
 
 (facts "about 'group-all-contributions-by-user-for-all-repositories'"
-       (fact "it returns the users with commits sorted by number of commits"
-             (group-all-contributions-by-user-for-all-repositories) => '(["guipdutra" 10] ["dhh" 8] ["rodrigomaia17" 3])
+       (fact "it returns the users with commits"
+             (group-all-contributions-by-user-for-all-repositories) => '{"dhh" 8 "guipdutra" 10 "rodrigomaia17" 3}
              (provided
                (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
                                                                               {:name "linux" :owner {:login "linux"}}
@@ -41,7 +41,7 @@
 
 (facts "about 'get-greatest-contributors'"
        (fact "it returns the greatest contributors username"
-             (get-greatest-contributors) => ["guipdutra" "dhh" "rodrigomaia17"]
+             (get-greatest-contributors) => ["rodrigomaia17" "dhh" "guipdutra"]
              (provided
                (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
                                                                               {:name "linux" :owner {:login "linux"}}
@@ -51,7 +51,7 @@
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "linux" :owner {:login "linux"}}) => '({:total 3 :author {:login "dhh"}} {:total 5 :author {:login "guipdutra"}})
                (crawler-contrib.github-api-wrapper/get-repository-statistics {:name "ruby" :owner {:login "ruby"}}) => '({:total 3 :author {:login "rodrigomaia17"}})))
        (fact "it returns only with total commits greater or equals than 5"
-             (get-greatest-contributors {:number-of-commits 5} ) => ["guipdutra" "dhh"]
+             (get-greatest-contributors {:number-of-commits 5} ) => ["dhh" "guipdutra"]
              (provided
                (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
                                                                               {:name "linux" :owner {:login "linux"}}

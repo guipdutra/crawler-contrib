@@ -34,9 +34,6 @@
             (sum-all-project-commits)
             (remove-any-nil-hash-value))))
 
-(defn sort-by-total-commits [users-with-commits]
-  (sort-by val > users-with-commits))
-
 (defn group-users-by-total-contributions [contributions]
   (cond
     (keyword? contributions) nil
@@ -59,8 +56,7 @@
                  (print-information-about-getting-repositories (swap! repo-count inc) (count all-repositories))
                  (group-users-by-total-contributions contrib)))
              (get-all-repositories-contributions all-repositories))
-        sum-all-project-commits
-        sort-by-total-commits)))
+        sum-all-project-commits)))
 
 (defn extract-commit-number [user-with-commit]
   (last user-with-commit))
