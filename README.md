@@ -1,4 +1,4 @@
-# crawler-contrib
+# crawler-contrib [![Build Status](https://snap-ci.com/guipdutra/crawler-contrib/branch/master/build_image)](https://snap-ci.com/guipdutra/crawler-contrib/branch/master)
 
 It searches in Github for Brazilians contributors in all public repositories.
 
