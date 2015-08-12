@@ -5,10 +5,10 @@
            [tentacles.pulls :as pulls]))
 
 (def valid-github-tokens
-  (map (fn [token] (System/getenv token)) ["GITHUB_ACCESS_TOKEN_1"
-                                           "GITHUB_ACCESS_TOKEN_2"
-                                           "GITHUB_ACCESS_TOKEN_3"
-                                           "GITHUB_ACCESS_TOKEN_4"]))
+  (remove nil? (map (fn [token] (System/getenv token)) ["GITHUB_ACCESS_TOKEN_1"
+                                                        "GITHUB_ACCESS_TOKEN_2"
+                                                        "GITHUB_ACCESS_TOKEN_3"
+                                                        "GITHUB_ACCESS_TOKEN_4"])))
 
 (defn get-remaining-request-by-token [token]
   (:remaining (:core (:resources (core/rate-limit {:oauth-token token})))))
@@ -28,7 +28,7 @@
 (def options {:all-pages true})
 
 (defn get-all-repositories []
-  (take 10000 (repos/all-repos (merge (auth) options))))
+  (take 8 (repos/all-repos (merge (auth) options))))
 
 (defn get-repository-statistics [repo]
   (repos/contributor-statistics (:login (:owner repo)) (:name repo) (auth)))
