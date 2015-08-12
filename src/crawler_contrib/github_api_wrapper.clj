@@ -17,10 +17,10 @@
   (fn [token] (> (get-remaining-request-by-token token) 0)))
 
 (defn pick-token []
-  (let [token (rand-nth valid-github-tokens)]
-  (if (token-request-is-greater-than-zero? token)
-    token
-    (pick-token))))
+  (loop [token (rand-nth valid-github-tokens)]
+    (if (token-request-is-greater-than-zero? token)
+      token
+      (recur (rand-nth valid-github-tokens)))))
 
 (defn auth []
   {:oauth-token (pick-token)})
