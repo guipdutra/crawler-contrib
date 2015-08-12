@@ -41,7 +41,7 @@
 
 (facts "about 'get-greatest-contributors'"
        (fact "it returns the greatest contributors username"
-             (get-greatest-contributors) => ["rodrigomaia17" "dhh" "guipdutra"]
+             (sort (get-greatest-contributors)) => ["dhh" "guipdutra" "rodrigomaia17"]
              (provided
                (crawler-contrib.github-api-wrapper/get-all-repositories) => '({:name "rails" :owner {:login "rails"}}
                                                                               {:name "linux" :owner {:login "linux"}}
