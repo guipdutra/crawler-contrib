@@ -14,6 +14,8 @@ After that it shows the username
 - Create your personal access token in Github and put in your env variables with name GITHUB_ACCESS_TOKEN_1.
 
 - Install Leiningen
+- Install the dependencies
+    lein deps
 - Run Tests:
     lein midje
 
