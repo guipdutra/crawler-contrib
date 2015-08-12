@@ -27,6 +27,9 @@ Example:
 (take 10 (repos/all-repos (merge (auth) options)))
 ```
 
+The max number of repositories that I ran was 80000 repositories, it tooks 354m(5.9 hours) 
+in a Macbook Pro 2.6 i5 with 8GB of memory.
+
 - Run app:
    lein run
 
