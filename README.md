@@ -19,7 +19,7 @@ After that it shows the username
 - Run Tests:
     lein midje
 
-Before run, change how many repositories you will retrieve from github. Use take x in github_api_wrapper.clj#get-all-repositories to get just few, if you leave it without a take it will fetch 12 millions repositories in Github, and it can take a long time.
+Before run, change how many repositories you will retrieve from github. Use take x in `github_api_wrapper.clj#get-all-repositories` to get just few, if you leave it without a take it will fetch 12 millions repositories in Github, and it can take a long time.
 Example: 
 ```
 (take 10 (repos/all-repos (merge (auth) options)))
