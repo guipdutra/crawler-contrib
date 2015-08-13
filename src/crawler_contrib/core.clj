@@ -14,4 +14,6 @@
 
 (defn -main []
   (dorun
-    (map println (format-output-with-link-and-location (filter-by-brazilians (get-greatest-contributors {:number-of-commits 5}))))))
+    (let [users (format-output-with-link-and-location (filter-by-brazilians (get-greatest-contributors {:number-of-commits 5})))]
+      (println (str "Found " (count users) " contributors:"))
+      (map println users))))
