@@ -15,13 +15,13 @@ Crawler-contrib works in 3 steps:
 
 - Install Leiningen
 - Install the dependencies:
-    ```bash
+```bash
        $ lein deps
-    ```
+```
 - Run tests:
-    ```bash
+```bash
        $ lein midje
-    ```
+```
 Make sure you set the number of repositories you wish to fetch from github before running Crawler-contrib.
 
 You can use `take x` in `github_api_wrapper.clj#get-all-repositories` to load just a few repos. Should you leave it without a limit, it will fetch about 12 million github repos (this could take a long time).
