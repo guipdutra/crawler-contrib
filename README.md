@@ -36,9 +36,9 @@ It can take up to 6 hours to fetch 80000 repos from github on a Macbook Pro 2.6 
 
 Steps:
 - Run app:
-   ```bash
+```bash
     $ lein trampoline run
-   ```
+```
 -  http://www.flyingmachinestudios.com/programming/lein-trampoline/
 
 ## License
