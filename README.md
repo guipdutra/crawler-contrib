@@ -1,37 +1,44 @@
 # crawler-contrib [![Build Status](https://snap-ci.com/guipdutra/crawler-contrib/branch/master/build_image)](https://snap-ci.com/guipdutra/crawler-contrib/branch/master)
 
-It searches in Github for Brazilians contributors in all public repositories.
+It searches in Github for Brazilian contributors in all public repositories.
 
 # How it works
 
-It gets all the public repositories in Github, for each repository it retrieves the contributors.
+Crawler-contrib works in 3 steps:
 
-With all the contributors in hand, it sums the commits in all projects for each user. 
-
-After that it shows the username
+1. Scans through every Github public repo and fetches all contributors.
+2. Sums up every commit for each user across all projects.
+3. Shows the usernames.
 
 ## Usage
-- Create your personal access token in Github and put in your env variables with name GITHUB_ACCESS_TOKEN_1.
+- Create your personal access token on Github and put it in an env variable named `GITHUB_ACCESS_TOKEN_1`.
 
 - Install Leiningen
 - Install the dependencies:
-    lein deps
-- Run Tests:
-    lein midje
+    ```bash
+       $ lein deps
+    ```
+- Run tests:
+    ```bash
+       $ lein midje
+    ```
+Make sure you set the number of repositories you wish to fetch from github before running Crawler-contrib.
 
-Before run, change how many repositories you will retrieve from github. 
+You can use `take x` in `github_api_wrapper.clj#get-all-repositories` to load just a few repos. Should you leave it without a limit, it will fetch about 12 million github repos (this could take a long time).
 
-Use take x in `github_api_wrapper.clj#get-all-repositories` to get just few, if you leave it without a number it will fetch 12 millions repositories in Github, and it can take a long time.
-Example: 
-```
+###Example: 
+```clojure
 (take 10 (repos/all-repos (merge (auth) options)))
 ```
 
-The max number of repositories that I ran was 80000 repositories, it tooks 354m(5.9 hours) 
-in a Macbook Pro 2.6 i5 with 8GB of memory.
+## Benchmark
+It can take up to 6 hours to fetch 80000 repos from github on a Macbook Pro 2.6 i5 with 8GB of ram.
 
+Steps:
 - Run app:
-   lein trampoline run
+   ```bash
+    $ lein trampoline run
+   ```
 -  http://www.flyingmachinestudios.com/programming/lein-trampoline/
 
 ## License
