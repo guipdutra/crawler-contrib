@@ -32,7 +32,7 @@ You can use `take x` in `github_api_wrapper.clj#get-all-repositories` to load ju
 ```
 
 ## Benchmark
-It can take up to 6 hours to fetch 80000 repos from github on a Macbook Pro 2.6 i5 with 8GB of ram.
+It can take up to 6 hours to process 80000 repos from github on a Macbook Pro 2.6 i5 with 8GB of ram.
 
 Steps:
 - Run app:
