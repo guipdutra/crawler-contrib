@@ -10,7 +10,10 @@
                                     "mviegas"
                                     "gregoriomelo"
                                     "ffrancieli"
-                                    "cv"]) => ["guipdutra" "rodrigomaia17" "ffrancieli" "cv"]
+                                    "cv"]) => [{ :name "guipdutra" :location "Porto Alegre, Brazil" }
+                                               { :name "rodrigomaia17" :location "Belo Horizonte, Brazil" }
+                                               { :name "ffrancieli" :location "Belo Horizonte" }
+                                               { :name "cv" :location "São Paulo" }]
              (provided
                (crawler-contrib.github-api-wrapper/get-user "guipdutra") => {:location "Porto Alegre, Brazil" :login "guipdutra"}
                (crawler-contrib.github-api-wrapper/get-user "rodrigomaia17") => {:location "Belo Horizonte, Brazil" :login "rodrigomaia17"}

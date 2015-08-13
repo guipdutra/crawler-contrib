@@ -22,8 +22,13 @@
 (def extract-login
   (fn [user-info] (:login user-info)))
 
+(def extract-login-and-location
+  (fn [user-info] (hash-map
+                    :name (extract-login user-info)
+                    :location (extract-location user-info))))
+
 (def get-user-info
   (fn [user-name] (get-user user-name)))
 
 (defn filter-by-brazilians [users]
-  (map extract-login (filter is-brazilian? (pmap get-user-info users))))
+  (map extract-login-and-location (filter is-brazilian? (pmap get-user-info users))))
