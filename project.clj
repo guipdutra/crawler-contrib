@@ -8,5 +8,6 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [ring/ring-core "1.4.0"]
                  [ring/ring-jetty-adapter "1.4.0"]
+                 [ring/ring-json "0.4.0"]
                  [tentacles "0.4.0"]]
   :main crawler-contrib.core)

@@ -1,6 +1,8 @@
 (ns crawler-contrib.core
   (:require [crawler-contrib.contributions :refer [get-greatest-contributors]]
-            [crawler-contrib.users :refer [filter-by-brazilians]])
+            [crawler-contrib.users :refer [filter-by-brazilians]]
+            [ring.middleware.json :refer [wrap-json-body]]
+            [ring.util.response :refer [response]])
   (:use ring.adapter.jetty))
 
 (def github-url
@@ -20,9 +22,17 @@
 ;      (map println users))))
 
 (defn handler [request]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body "Hello World"})
+  (prn (str "Received " (count (:body request)) " repositories to process"))
+
+  (let [users (future (format-output-with-link-and-location
+                        (filter-by-brazilians
+                          (get-greatest-contributors (:body request) {:number-of-commits 5}))))]
+    (response "Requested sent.")
+    (println (str "Found " (count @users) " contributors:"))
+    (map println @users)))
+
+(def app
+  (wrap-json-body handler {:keywords? true :bigdecimals? true}))
 
 (defn -main []
-  (run-jetty handler {:port 3000}))
+  (run-jetty app {:port 3000}))
