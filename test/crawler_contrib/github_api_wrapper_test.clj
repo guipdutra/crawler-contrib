@@ -2,12 +2,6 @@
   (:use midje.sweet)
   (:use crawler-contrib.github-api-wrapper))
 
-(facts "about 'get-all-repositories'"
-       (fact "it calls github API for all repositories with all-pages true and auth"
-             (get-all-repositories) => [{}]
-             (provided
-               (tentacles.repos/all-repos anything) => [{}])))
-
 (facts "about 'get-repository-statistics'"
        (fact "it calls github API for repository statistics"
              (get-repository-statistics {:owner {:login "user"} :name "repo_name"}) => [{}]

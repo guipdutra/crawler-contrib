@@ -1,7 +1,6 @@
 (ns crawler-contrib.contributions
   (:require [crawler-contrib.github-api-wrapper
-             :refer [get-all-repositories
-                     get-repository-statistics]]))
+             :refer [get-repository-statistics]]))
 
 (def extract-login-and-total-commits
   (fn [contribution]
@@ -48,15 +47,10 @@
 (defn print-information-about-getting-repositories [repo-count total-repositories]
   (println (str "Getting " repo-count " of " total-repositories)))
 
-(defn group-all-contributions-by-user-for-all-repositories []
-  (let [repo-count (atom 0)
-        all-repositories (get-all-repositories)]
-    (-> (map (fn [contrib]
-               (do
-                 (print-information-about-getting-repositories (swap! repo-count inc) (count all-repositories))
-                 (group-users-by-total-contributions contrib)))
-             (get-all-repositories-contributions all-repositories))
-        sum-all-project-commits)))
+(defn group-all-contributions-by-user-for-all-repositories [all-repositories]
+  (-> (map
+        (fn [contrib] (group-users-by-total-contributions contrib))
+           (get-all-repositories-contributions all-repositories)) sum-all-project-commits))
 
 (defn extract-commit-number [user-with-commit]
   (last user-with-commit))
@@ -68,7 +62,7 @@
     users-with-commits))
 
 (defn get-greatest-contributors
-  ([] (map extract-user-name (group-all-contributions-by-user-for-all-repositories)))
+  ([all-repositories] (map extract-user-name (group-all-contributions-by-user-for-all-repositories all-repositories)))
 
-  ([{:keys [number-of-commits]}]
-   (map extract-user-name (filter-by-number-of-commits (group-all-contributions-by-user-for-all-repositories) number-of-commits))))
+  ([all-repositories {:keys [number-of-commits]}]
+   (map extract-user-name (filter-by-number-of-commits (group-all-contributions-by-user-for-all-repositories all-repositories) number-of-commits))))
