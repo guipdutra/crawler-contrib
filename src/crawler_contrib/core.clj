@@ -21,15 +21,20 @@
 ;      (println (str "Found " (count users) " contributors:"))
 ;      (map println users))))
 
+
+(def process-repositories
+  (fn [repositories]
+    (future
+      (println
+        (format-output-with-link-and-location
+          (filter-by-brazilians
+            (get-greatest-contributors repositories {:number-of-commits 5})))))))
+
+
 (defn handler [request]
   (prn (str "Received " (count (:body request)) " repositories to process"))
-
-  (let [users (future (format-output-with-link-and-location
-                        (filter-by-brazilians
-                          (get-greatest-contributors (:body request) {:number-of-commits 5}))))]
-    (response "Requested sent.")
-    (println (str "Found " (count @users) " contributors:"))
-    (map println @users)))
+  (process-repositories (:body request))
+  (response "Requested sent."))
 
 (def app
   (wrap-json-body handler {:keywords? true :bigdecimals? true}))
