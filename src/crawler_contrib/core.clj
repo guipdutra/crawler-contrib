@@ -15,13 +15,6 @@
 (defn format-output-with-link-and-location [users]
   (map concat-github-link-and-location users))
 
-;(defn -main []
-;  (dorun
-;    (let [users (format-output-with-link-and-location (filter-by-brazilians (get-greatest-contributors {:number-of-commits 5})))]
-;      (println (str "Found " (count users) " contributors:"))
-;      (map println users))))
-
-
 (def process-repositories
   (fn [repositories]
     (future
