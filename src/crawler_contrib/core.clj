@@ -32,7 +32,7 @@
                          {:body (client/json-encode users)
                           :content-type :json
                           :accept :json })))
-        (println "Processed."))))
+        (println "Processed.")))))
 
 
 (defn handler [request]
