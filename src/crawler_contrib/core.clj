@@ -22,15 +22,17 @@
 (def process-repositories
   (fn [repositories]
     (future
-      (client/post master-address
-                   {:body
-                    (client/json-encode
-                      (format-output-with-link-and-location
-                        (filter-by-brazilians
-                          (get-greatest-contributors
-                            repositories {:number-of-commits 5}))))
-                    :content-type :json
-                    :accept :json }))))
+      (do
+        (let [users (format-output-with-link-and-location
+                      (filter-by-brazilians
+                        (get-greatest-contributors
+                          repositories {:number-of-commits 5})))]
+          (if-not (empty? users)
+            (client/post master-address
+                         {:body (client/json-encode users)
+                          :content-type :json
+                          :accept :json })))
+        (println "Processed."))))
 
 
 (defn handler [request]
