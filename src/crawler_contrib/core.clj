@@ -27,13 +27,12 @@
                       (filter-by-brazilians
                         (get-greatest-contributors
                           repositories {:number-of-commits 5})))]
-          (if-not (empty? users)
-            (client/post master-address
-                         {:body (client/json-encode users)
-                          :content-type :json
-                          :accept :json })))
-        (println "Processed.")))))
 
+          (client/post master-address
+                       {:body (client/json-encode users)
+                        :content-type :json
+                        :accept :json }))
+        (println "Processed.")))))
 
 (defn handler [request]
   (prn (str "Received " (count (:body request)) " repositories to process"))
