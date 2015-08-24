@@ -3,10 +3,14 @@
             [crawler-contrib.users :refer [filter-by-brazilians]]
             [ring.middleware.json :refer [wrap-json-body]]
             [ring.util.response :refer [response]])
-  (:use ring.adapter.jetty))
+  (:use ring.adapter.jetty)
+  (require [clj-http.client :as client]))
 
 (def github-url
   "https://github.com/")
+
+(def master-address
+  "http://0.0.0.0:3001")
 
 (def concat-github-link-and-location
   (fn [user]
@@ -17,11 +21,11 @@
 
 (def process-repositories
   (fn [repositories]
-    (future
-      (println
-        (format-output-with-link-and-location
-          (filter-by-brazilians
-            (get-greatest-contributors repositories {:number-of-commits 5})))))))
+    (future (client/post master-address {:body (client/json-encode
+                                                 (format-output-with-link-and-location
+                                                   (filter-by-brazilians
+                                                     (get-greatest-contributors repositories {:number-of-commits 5})))) :content-type :json :accept :json }))))
+
 
 
 (defn handler [request]
