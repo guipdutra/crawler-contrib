@@ -35,8 +35,8 @@
 
 (defn handler [request]
   (prn (str "Received " (count (:body request)) " repositories to process"))
-  (response "Requested sent."))
-  (process-repositories (:body request))
+  (response "Requested sent.")
+  (process-repositories (:body request)))
 
 (def app
   (wrap-json-body handler {:keywords? true :bigdecimals? true}))
