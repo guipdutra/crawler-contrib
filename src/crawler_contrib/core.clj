@@ -10,7 +10,7 @@
   "https://github.com/")
 
 (def master-address
-  "http://10.74.20.36:3001")
+  "http://10.74.20.26:3001")
 
 (def concat-github-link-and-location
   (fn [user]
