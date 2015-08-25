@@ -1,14 +1,18 @@
 # crawler-contrib [![Build Status](https://snap-ci.com/guipdutra/crawler-contrib/branch/master/build_image)](https://snap-ci.com/guipdutra/crawler-contrib/branch/master)
 
-It searches in Github for Brazilian contributors in all public repositories.
+It works like a daemon to process repositories fetched from [crawler-fecther](https://github.com/guipdutra/crawler-fetcher) the goal is to search for Brazilian contributors in all public repositories.
 
 # How it works
 
-Crawler-contrib works in 3 steps:
+Crawler-contrib works in 4 steps:
 
-1. Scans through every Github public repo and fetches all contributors.
-2. Sums up every commit for each user across all projects.
-3. Shows the usernames.
+1. [crawler-fecther](https://github.com/guipdutra/crawler-fetcher) fetch all the public repositories form Github.
+2. crawler-contrib receive the repositories and scans through every Github public repo and fetches all contributors. 
+3. Sums up every commit for each user across all projects.
+4. Return the usernames to crawler-fetcher.
+
+## Setup the crawler-fetcher address
+In `core.clj#master-address` put the address where the crawler-fecther is running.
 
 ## Usage
 - Create your personal access token on Github and put it in an env variable named `GITHUB_ACCESS_TOKEN_1`.
@@ -22,24 +26,10 @@ Crawler-contrib works in 3 steps:
 ```bash
        $ lein midje
 ```
-Make sure you set the number of repositories you wish to fetch from github before running Crawler-contrib.
-
-You can use `take x` in `github_api_wrapper.clj#get-all-repositories` to load just a few repos. Should you leave it without a limit, it will fetch about 12 million github repos (this could take a long time).
-
-###Example: 
-```clojure
-(take 10 (repos/all-repos (merge (auth) options)))
-```
-
-## Benchmark
-It can take up to 6 hours to process 80000 repos from github on a Macbook Pro 2.6 i5 with 8GB of ram.
-
-Steps:
-- Run app:
+- Run the crawler contrib:
 ```bash
-    $ lein trampoline run
+       $ lein trampoline run
 ```
--  http://www.flyingmachinestudios.com/programming/lein-trampoline/
 
 ## License
 
