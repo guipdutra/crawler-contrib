@@ -6,7 +6,7 @@ It works like a daemon to process repositories fetched from [crawler-fecther](ht
 
 Crawler-contrib works in 4 steps:
 
-1. [crawler-fecther](https://github.com/guipdutra/crawler-fetcher) fetch all the public repositories form Github.
+1. [crawler-fetcher](https://github.com/guipdutra/crawler-fetcher) fetch all the public repositories form Github.
 2. crawler-contrib receive the repositories and scans through every Github public repo and fetches all contributors. 
 3. Sums up every commit for each user across all projects.
 4. Return the usernames to crawler-fetcher.
