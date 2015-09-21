@@ -1,6 +1,6 @@
 # crawler-contrib [![Build Status](https://snap-ci.com/guipdutra/crawler-contrib/branch/master/build_image)](https://snap-ci.com/guipdutra/crawler-contrib/branch/master)
 
-It works like a daemon to process repositories fetched from [crawler-fecther](https://github.com/guipdutra/crawler-fetcher) the goal is to search for Brazilian contributors in all public repositories.
+It works like a daemon to process repositories fetched from [crawler-fetcher](https://github.com/guipdutra/crawler-fetcher) the goal is to search for Brazilian contributors in all public repositories.
 
 # How it works
 
@@ -12,7 +12,7 @@ Crawler-contrib works in 4 steps:
 4. Return the usernames to crawler-fetcher.
 
 ## Setup the crawler-fetcher address
-In `core.clj#master-address` put the address where the crawler-fecther is running.
+In `core.clj#master-address` put the address where the crawler-fetcher is running.
 
 ## Usage
 - Create your personal access token on Github and put it in an env variable named `GITHUB_ACCESS_TOKEN_1`.
